@@ -5,6 +5,8 @@ import com.paypal.user_service.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -21,8 +23,8 @@ public class UserController {
         return userService.getUserById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
     @GetMapping("/all")
-    public ResponseEntity<User> getAllUsers() {
-        return  ResponseEntity.ok( (User) userService.getAllUsers());
+    public ResponseEntity<List<User>> getAllUsers() {
+        return  ResponseEntity.ok(userService.getAllUsers());
     }
 
 }
