@@ -13,20 +13,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disable CSRF for simplicity (mainly for POST/PUT requests in testing)
                 .csrf(csrf -> csrf.disable())
-
-                // Disable CORS if you want to test from frontend
-                .cors(cors -> cors.disable())
-
-                // Permit all requests (completely disable security)
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
-                )
-
-                // Disable default login form or HTTP Basic auth
-                .formLogin(form -> form.disable())
-                .httpBasic(httpBasic -> httpBasic.disable());
+                        .requestMatchers("/api/users/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }
