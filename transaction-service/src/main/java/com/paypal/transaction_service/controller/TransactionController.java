@@ -13,18 +13,20 @@ import java.util.List;
 @RequestMapping("/api/transactions/")
 public class TransactionController {
     private final TransactionService service;
+
     public TransactionController(TransactionService service) {
         this.service = service;
     }
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody Transaction transaction) {
-        return ResponseEntity.ok("created");
 
+        Transaction created = service.createTransaction(transaction);
+        return ResponseEntity.ok(created);
     }
-    @GetMapping("/all")
-    public List<Transaction> getAllTransactions() {
-        return service.getAllTransactions();
 
+    @GetMapping("/all")
+    public List<Transaction> getAll() {
+        return service.getAllTransactions();
     }
 
 }
